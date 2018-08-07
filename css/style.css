@@ -82,42 +82,94 @@ main.in-game .header {
 
 .menu-btns-container {
   position: absolute;
-  height: 200px;
-  top: 100px;
+  height: 500px;
+  bottom: 60px;
   left: 0;
   right: 0;
   bottom: 10px;
   margin: auto;
 }
 
-.menu-btn {
+.menu-btn,
+.map-size-btn {
   display: block;
-  margin: 30px auto;
-  position: relative;
-  width: 300px;
-  height: 60px;
-  color: #fff;
-  font-size: 40rem;
+  margin: auto;
   border: none;
   outline: none;
   font-family: 'Slabo 27px', serif;
   background: none;
   cursor: url(../img/menu/cursor.png), default;
-  text-shadow: 0 0 40px #0a3538;
+  position: relative;
+  color: #fff;
+  font-size: 40rem;
 }
-.menu-btn::before {
+
+.menu-btn::before,
+.map-size-btn::before {
   content: "";
   display: block;
   width: 100%;
   height: 100%;
   position: absolute;
   z-index: -1;
-  background: url(../img/menu/button.png);
-  background-position: bottom;
   
   transition: .1s linear;
 }
+
+.menu-btn {
+  margin-top: 30px;
+  width: 300px;
+  height: 60px;
+  text-shadow: 0 0 40px #0a3538;
+}
+.menu-btn::before {
+  background: url(../img/menu/button.png);
+  background-position: bottom;
+}
 .menu-btn:hover::before {
+  transform: scale(1.07);
+}
+
+.map-size-btn {
+  width: 400px;
+  height: 80px;
+  margin-top: 20px;
+  text-align: right;
+  padding: 0 10px;
+  box-sizing: border-box;
+  
+  transition: .5s;
+}
+.map-size-btn:hover {
+  color: #4f9cae;
+}
+.map-size-btn::before {
+  background-color: #524a4a;
+  border-radius: 10px;
+  transform: translateY(-15%);
+  box-shadow: 0 2px 2px #666;
+}
+.map-size-btn:hover::before {
+  transform: scale(1.03) translateY(-15%);
+  box-shadow: 0 6px 6px #666;
+}
+
+.map-size-btn .nof-mines {
+  position: absolute;
+  left: 30px;
+  top: 15px;
+}
+.map-size-btn .nof-mines::after {
+  content: '';
+  display: inline-block;
+  margin-left: 10px;
+  width: 32px;
+  height: 32px;
+  background-image: url(../img/game/mine.png);
+  
+  transition: .1s linear;
+}
+.map-size-btn:hover .nof-mines::after {
   transform: scale(1.1);
 }
 

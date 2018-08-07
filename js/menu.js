@@ -1,6 +1,7 @@
-var createButton = function(caption) {
+var createButton = function(size, mines) {
   button = document.createElement("button");
-  button.classList.add("menu-btn");
+  button.classList.add("map-size-btn");
+  var caption = '<div class="nof-mines">' + mines + '</div>' + size + 'x' + size;
   button.innerHTML = caption;
   
   return button;
@@ -11,7 +12,9 @@ var renderMenu = function() {
   var btnContainer = document.createElement("section");
   btnContainer.classList.add("menu-btns-container");
   
-  btnContainer.appendChild(createButton('Start'));
-  btnContainer.appendChild(createButton('Options'));
+  btnContainer.appendChild(createButton(8, 8));
+  btnContainer.appendChild(createButton(16, 24));
+  btnContainer.appendChild(createButton(32, 64));
+  btnContainer.appendChild(createButton(64, 192));
   container.appendChild(btnContainer);
 }
