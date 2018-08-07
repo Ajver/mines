@@ -2,7 +2,7 @@
 var createButton = function(level) {
   button = document.createElement("button");
   button.classList.add("map-size-btn");
-  var caption = '<div class="nof-mines">' + level.mines + '</div>' + level.size + 'x' + level.size;
+  var caption = '<div class="nof-mines">' + level.mines + '</div>' + level.col + 'x' + level.row;
   button.innerHTML = caption;
   button.addEventListener("click", function() {
     createGame(level);

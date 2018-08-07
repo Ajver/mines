@@ -180,10 +180,32 @@ main.in-game .menu-btns-container {
   transform: translateY(5px) scale(1.1);
 }
 
-.tile {
-  width: 20px;
-  height: 20px;
+.map {
+  width: 700px;
+  margin: auto;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  transform: scale(0.05);
+  
+  transition: .5s;
+}
+.map.redy {
+  transform: scale(1);
+}
+
+.field {
+  display: inline-block;
   background-color: #524a4a;
+  border-radius: 3px;
+  box-shadow: 0 0 6px #222;
+  
+  transition: .1s;
+}
+.field:hover {
+  background-color: #302828;
+  box-shadow: 0 0 12px #222;
 }
 
 @media(max-width: 1200px) {
