@@ -163,6 +163,7 @@ main.in-game .header {
   content: '';
   display: inline-block;
   margin-left: 10px;
+  transform: translateY(5px);
   width: 32px;
   height: 32px;
   background-image: url(../img/game/mine.png);
@@ -170,7 +171,7 @@ main.in-game .header {
   transition: .1s linear;
 }
 .map-size-btn:hover .nof-mines::after {
-  transform: scale(1.1);
+  transform: translateY(5px) scale(1.1);
 }
 
 .tile {
