@@ -88,6 +88,8 @@ main.in-game .header {
   right: 0;
   bottom: 10px;
   margin: auto;
+  
+  transition: .7s;
 }
 
 .menu-btn,
@@ -102,6 +104,10 @@ main.in-game .header {
   position: relative;
   color: #fff;
   font-size: 40rem;
+}
+
+main.in-game .menu-btns-container {
+  transform: translateY(120%);
 }
 
 .menu-btn::before,

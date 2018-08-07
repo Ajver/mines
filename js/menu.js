@@ -1,8 +1,12 @@
-var createButton = function(size, mines) {
+
+var createButton = function(level) {
   button = document.createElement("button");
   button.classList.add("map-size-btn");
-  var caption = '<div class="nof-mines">' + mines + '</div>' + size + 'x' + size;
+  var caption = '<div class="nof-mines">' + level.mines + '</div>' + level.size + 'x' + level.size;
   button.innerHTML = caption;
+  button.addEventListener("click", function() {
+    createGame(level);
+  }, false);
   
   return button;
 }
@@ -12,9 +16,9 @@ var renderMenu = function() {
   var btnContainer = document.createElement("section");
   btnContainer.classList.add("menu-btns-container");
   
-  btnContainer.appendChild(createButton(8, 8));
-  btnContainer.appendChild(createButton(16, 24));
-  btnContainer.appendChild(createButton(32, 64));
-  btnContainer.appendChild(createButton(64, 192));
+  for(var i=0; i<levels.length; i++) {
+    btnContainer.appendChild(createButton(levels[i]));
+  }
+  
   container.appendChild(btnContainer);
 }
