@@ -10,19 +10,64 @@ function Level(col, row, mines) {
 function Field(x, y) {
   this.x = x;
   this.y = y;
+  this.w = 0;
+  this.h = 0;
   this.neighbors = 0;
   this.isOpen = false;
-  this.isMine = false;
+  this.isMine = true;
   this.isPointed = false;
+  this.htmlEl = null;
   
-  this.getHTMLElement = function(w, h, margin) {
-    var el = document.createElement("div");
-    el.classList.add("field");
-    el.style.width = w + 'px';
-    el.style.height = h + 'px';
-    el.style.margin = margin + 'px';
+  this.updateHTMLElement = function() {
+    this.htmlEl.innerHTML = "";
+    if(this.isOpen) {
+      if(this.isMine) {
+        this.htmlEl.innerHTML = '<img src="img/game/mine.png" width="' + (this.w < this.h ? this.w : this.h) + '" alt="">';
+      }else {
+        this.htmlEl.innerHTML = this.neighbors;
+        switch(this.neighbors) {
+          case 0: this.htmlEl.style.color = "transparent"; break;
+          case 1: this.htmlEl.style.color = '#038428'; break;
+          case 2: this.htmlEl.style.color = '#007599'; break;
+          case 3: this.htmlEl.style.color = '#e29700'; break;
+          case 4: this.htmlEl.style.color = '#d63900'; break;
+          default: this.htmlEl.style.color = '#a30606'; break;
+        }
+      }
+    }else if(this.isPointed) {
+      this.htmlEl.innerHTML = '<img src="img/game/flag.png" width="' + (this.w < this.h ? this.w : this.h) + '" alt="">';
+    }
+  }
+  
+  this.createHTMLElement = function(w, h, margin) {
+    this.htmlEl = document.createElement("div");
+    this.htmlEl.classList.add("field");
+    this.htmlEl.style.width = w + 'px';
+    this.htmlEl.style.height = h + 'px';
+    this.htmlEl.style.margin = margin + 'px';
+    this.htmlEl.style.fontSize = (w * 0.9) + 'px';
     
-    return el;
+    this.w = w;
+    this.h = h;
+    
+    this.htmlEl.addEventListener("click", function() {
+      map.open(x, y);
+    }, false);
+    
+    this.htmlEl.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+      map.point(x, y);
+    }, false);
+    
+    this.updateHTMLElement();
+  }
+  
+  this.open = function() {
+    this.htmlEl.classList.add("open");
+    this.htmlEl.addEventListener("click", null, false);
+    this.htmlEl.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    }, false);
   }
 }
 
@@ -33,6 +78,25 @@ function Map(level) {
   this.fields = [];
   this.htmlEl = null;
   
+  this.open = function(x, y) {
+    if(!this.fields[x][y].isOpen && !this.fields[x][y].isPointed) {
+      this.fields[x][y].isOpen = true;
+      this.fields[x][y].updateHTMLElement();
+      this.fields[x][y].open();
+    }
+  }
+  
+  this.point = function(x, y) {
+    if(!this.fields[x][y].isPointed) {
+      this.fields[x][y].isPointed = true;
+      
+    }else {
+      this.fields[x][y].isPointed = false;
+    }
+    
+    this.fields[x][y].updateHTMLElement();
+  }
+  
   this.createHTMLElement = function() {
     var htmlMap = document.createElement("div");
     htmlMap.classList.add("map");
@@ -41,10 +105,13 @@ function Map(level) {
     var fieldW = (this.w/this.level.col) - (margin*2);
     var fieldH = (this.w/this.level.row) - (margin*2);
     
-    for(var yy=0; yy<this.level.col; yy++) {
-      for(var xx=0; xx<this.level.row; xx++) {
-        var f = new Field(xx, yy, fieldW);    
-        htmlMap.appendChild(f.getHTMLElement(fieldW, fieldH, margin));
+    for(var xx=0; xx<this.level.col; xx++) {
+      this.fields[xx] = [];
+      for(var yy=0; yy<this.level.row; yy++) {
+        var f = new Field(xx, yy, fieldW);       
+        f.createHTMLElement(fieldW, fieldH, margin);
+        this.fields[xx][yy] = f;
+        htmlMap.appendChild(f.htmlEl);
       }
     }
     

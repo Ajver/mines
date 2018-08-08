@@ -153,11 +153,9 @@ main.in-game .menu-btns-container {
   background-color: #524a4a;
   border-radius: 10px;
   transform: translateY(-15%);
-  box-shadow: 0 2px 2px #666;
 }
 .map-size-btn:hover::before {
-  transform: scale(1.03) translateY(-15%);
-  box-shadow: 0 6px 6px #666;
+  background-color: #302828;
 }
 
 .map-size-btn .nof-mines {
@@ -196,10 +194,12 @@ main.in-game .menu-btns-container {
 }
 
 .field {
-  display: inline-block;
   background-color: #524a4a;
   border-radius: 3px;
   box-shadow: 0 0 6px #222;
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
   
   transition: .1s;
 }
@@ -207,6 +207,13 @@ main.in-game .menu-btns-container {
   background-color: #302828;
   box-shadow: 0 0 12px #222;
 }
+.field.open {
+  background-color: #746c6c;
+}
+.field.open:hover {
+  background-color: #746c6c;
+}
+
 
 @media(max-width: 1200px) {
   main {
