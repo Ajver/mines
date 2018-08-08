@@ -253,9 +253,11 @@ main.in-game .menu-btns-container {
 }
 .field.open {
   background-color: #746c6c;
+  box-shadow: none;
 }
 .field.open:hover {
   background-color: #746c6c;
+  box-shadow: none;
 }
 
 .game-footer {
