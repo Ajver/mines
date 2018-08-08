@@ -258,8 +258,23 @@ main.in-game .menu-btns-container {
   background-color: #746c6c;
 }
 
-@media(max-width: 1200px) {
-  main {
-    width: 100vw;
-  }
+.game-footer {
+  position: fixed;
+  width: 100vw;
+  height: 30px;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+.game-footer p {
+  font-size: 16rem;
+  color: #efefef;
+}
+
+.game-footer p a {
+  text-decoration: none;
+  color: #4f9cae;
+  letter-spacing: 2rem;
+  margin-left: 10rem;
 }
