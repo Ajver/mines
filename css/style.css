@@ -201,6 +201,7 @@ main.in-game .menu-btns-container {
   box-sizing: border-box;
   display: block;
   position: absolute;
+  color: #000;
   
   transition: .1s;
 }
