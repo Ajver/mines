@@ -12,7 +12,7 @@ function Field(x, y) {
   this.y = y;
   this.w = 0;
   this.h = 0;
-  this.neighbors = 2;
+  this.neighbors = 0;
   this.isOpen = false;
   this.isMine = false;
   this.isPointed = false;
