@@ -2,42 +2,7 @@
 var levels = [];
 var map = {};
 
-var createModal = function(hdrCaption, color, btns) {
-  var main = document.querySelector("main");
-  var modal = document.createElement("section");
-  modal.classList.add("modal");
-  
-  var header = document.createElement("h2");
-  header.innerHTML = hdrCaption;
-  header.style.color = color;
-  
-  modal.appendChild(header);
-  
-  for(var i=0; i<btns.length; i++) {
-    modal.appendChild(btns[i]);
-  }
-  
-  main.appendChild(modal);
-  main.classList.add("is-modal");
-  
-  window.setTimeout(function() {
-    modal.classList.add("redy");
-  }, 10);
-}
-
-var removeModal = function() {
-  var main = document.querySelector("main");
-  var modal = document.querySelector("section.modal");
-  main.classList.remove("is-modal");
-
-  modal.classList.remove("redy");
-
-  window.setTimeout(function() {
-    main.removeChild(modal);
-  }, 500);
-}
-
-var gameOver = function(level) {
+var createModal = function(hdrCaption, color, level) {
   var btn1 = document.createElement("button");
   var btn2 = document.createElement("button");
 
@@ -65,15 +30,49 @@ var gameOver = function(level) {
       
       window.setTimeout(function() {
         document.querySelector("main").classList.remove("in-game");
-      }, 10);
+      }, 20);
     }, 500);
   }, false);
   
-  createModal("Game over", "#a30606", [btn1, btn2]);
+  var main = document.querySelector("main");
+  var modal = document.createElement("section");
+  modal.classList.add("modal");
+  
+  var header = document.createElement("h2");
+  header.innerHTML = hdrCaption;
+  header.style.color = color;
+  
+  modal.appendChild(header);
+  
+  modal.appendChild(btn1);
+  modal.appendChild(btn2);
+  
+  main.appendChild(modal);
+  main.classList.add("is-modal");
+  
+  window.setTimeout(function() {
+    modal.classList.add("redy");
+  }, 10);
 }
 
-var wonGame = function() {
-  
+var removeModal = function() {
+  var main = document.querySelector("main");
+  var modal = document.querySelector("section.modal");
+  main.classList.remove("is-modal");
+
+  modal.classList.remove("redy");
+
+  window.setTimeout(function() {
+    main.removeChild(modal);
+  }, 500);
+}
+
+var gameOver = function(level) {
+  createModal("Game over", "#a30606", level);
+}
+
+var wonGame = function(level) {
+  createModal("You won", "#07822a", level);
 }
 
 function Level(col, row, mines) {
@@ -216,7 +215,7 @@ function Map(level) {
     // Checking is won 
     var won = true;
     
-    for(var xx=0; yy<this.level.col; xx++) {
+    for(var xx=0; xx<this.level.col; xx++) {
     for(var yy=0; yy<this.level.row; yy++) {
       if(!this.fields[xx][yy].isMine) {
         if(!this.fields[xx][yy].isOpen) {
@@ -230,7 +229,7 @@ function Map(level) {
     }}
     
     if(won) {
-      
+      wonGame(this.level);
     }
   }
   
