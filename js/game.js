@@ -68,6 +68,8 @@ function Field(x, y) {
   }
   
   this.open = function() {
+    this.isOpen = true;
+    this.updateHTMLElement();
     this.htmlEl.classList.add("open");
     this.htmlEl.addEventListener("click", null, false);
     this.htmlEl.addEventListener("contextmenu", function(e) {
@@ -83,11 +85,45 @@ function Map(level) {
   this.fields = [];
   this.htmlEl = null;
   
-  this.open = function(x, y) {
-    if(!this.fields[x][y].isOpen && !this.fields[x][y].isPointed) {
-      this.fields[x][y].isOpen = true;
-      this.fields[x][y].updateHTMLElement();
+  this.open = function (x, y) {
+    if (!this.fields[x][y].isOpen && !this.fields[x][y].isPointed) {
       this.fields[x][y].open();
+
+      if (this.fields[x][y].isMine) { // Game over
+
+      } else if (this.fields[x][y].neighbors == 0) {
+        function Point(x, y) {
+          this.x = x;
+          this.y = y;
+        }
+
+        var points = [];
+
+        points.push(new Point(x, y));
+
+        while (points.length > 0) {
+          var newPoints = [];
+
+          for (var i = 0; i < points.length; i++) {
+            for(var yy=points[i].y - 1; yy<points[i].y + 2; yy++) {
+            for(var xx=points[i].x - 1; xx<points[i].x + 2; xx++) {
+              if(xx >= 0 && xx < this.level.col) {
+                if(yy >= 0 && yy < this.level.row) {
+                  if(!this.fields[xx][yy].isOpen && !this.fields[xx][yy].isPointed) {
+                    if(this.fields[xx][yy].neighbors == 0) {
+                      newPoints.push(new Point(xx, yy));
+                    }
+
+                    this.fields[xx][yy].open();
+                  }
+                }
+              }
+            }}
+            
+            points = newPoints;
+          }
+        }
+      }
     }
   }
   
