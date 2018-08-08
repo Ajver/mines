@@ -180,6 +180,7 @@ main.in-game .menu-btns-container {
 
 .map {
   width: 700px;
+  height: 700px;
   margin: auto;
   position: absolute;
   bottom: 40px;
@@ -198,8 +199,8 @@ main.in-game .menu-btns-container {
   border-radius: 3px;
   box-shadow: 0 0 6px #222;
   box-sizing: border-box;
-  display: inline-flex;
-  justify-content: center;
+  display: block;
+  position: absolute;
   
   transition: .1s;
 }
@@ -213,7 +214,6 @@ main.in-game .menu-btns-container {
 .field.open:hover {
   background-color: #746c6c;
 }
-
 
 @media(max-width: 1200px) {
   main {

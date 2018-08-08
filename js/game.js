@@ -12,26 +12,28 @@ function Field(x, y) {
   this.y = y;
   this.w = 0;
   this.h = 0;
-  this.neighbors = 0;
+  this.neighbors = 2;
   this.isOpen = false;
-  this.isMine = true;
+  this.isMine = false;
   this.isPointed = false;
   this.htmlEl = null;
   
-  this.updateHTMLElement = function() {
+  this.updateHTMLElement = function() {    
     this.htmlEl.innerHTML = "";
+    
     if(this.isOpen) {
       if(this.isMine) {
         this.htmlEl.innerHTML = '<img src="img/game/mine.png" width="' + (this.w < this.h ? this.w : this.h) + '" alt="">';
       }else {
-        this.htmlEl.innerHTML = this.neighbors;
-        switch(this.neighbors) {
-          case 0: this.htmlEl.style.color = "transparent"; break;
-          case 1: this.htmlEl.style.color = '#038428'; break;
-          case 2: this.htmlEl.style.color = '#007599'; break;
-          case 3: this.htmlEl.style.color = '#e29700'; break;
-          case 4: this.htmlEl.style.color = '#d63900'; break;
-          default: this.htmlEl.style.color = '#a30606'; break;
+        if(this.neighbors > 0) {
+          this.htmlEl.innerHTML = this.neighbors;
+          switch(this.neighbors) {
+            case 1: this.htmlEl.style.color = '#038428'; break;
+            case 2: this.htmlEl.style.color = '#007599'; break;
+            case 3: this.htmlEl.style.color = '#e29700'; break;
+            case 4: this.htmlEl.style.color = '#d63900'; break;
+            default: this.htmlEl.style.color = '#a30606'; break;
+          }
         }
       }
     }else if(this.isPointed) {
@@ -44,8 +46,11 @@ function Field(x, y) {
     this.htmlEl.classList.add("field");
     this.htmlEl.style.width = w + 'px';
     this.htmlEl.style.height = h + 'px';
-    this.htmlEl.style.margin = margin + 'px';
     this.htmlEl.style.fontSize = (w * 0.9) + 'px';
+    
+    this.htmlEl.style.left = (this.x * (w + margin*2)) + 'px';
+    this.htmlEl.style.top = (this.y * (h + margin*2)) + 'px';
+    
     
     this.w = w;
     this.h = h;
@@ -98,8 +103,12 @@ function Map(level) {
   }
   
   this.createHTMLElement = function() {
-    var htmlMap = document.createElement("div");
-    htmlMap.classList.add("map");
+    this.htmlEl = document.createElement("div");
+    this.htmlEl.classList.add("map");
+    
+    this.htmlEl.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+    }, false);
     
     var margin = this.level.col < 32 ? 2 : 1;
     var fieldW = (this.w/this.level.col) - (margin*2);
@@ -111,12 +120,11 @@ function Map(level) {
         var f = new Field(xx, yy, fieldW);       
         f.createHTMLElement(fieldW, fieldH, margin);
         this.fields[xx][yy] = f;
-        htmlMap.appendChild(f.htmlEl);
+        this.htmlEl.appendChild(f.htmlEl);
       }
     }
     
-    document.getElementById("container").appendChild(htmlMap);
-    this.htmlEl = htmlMap;
+    document.getElementById("container").appendChild(this.htmlEl);
   }
   
   this.createHTMLElement();
