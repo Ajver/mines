@@ -7,6 +7,10 @@ var setup = function() {
   levels[3] = new Level(48, 48, 192);
   
   renderMenu();
+  
+  window.setTimeout(function() {
+    document.querySelector("main").classList.remove("in-game");
+  }, 10);
 }
 
 window.addEventListener("load", function() {

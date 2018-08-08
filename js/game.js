@@ -1,5 +1,80 @@
+
 var levels = [];
 var map = {};
+
+var createModal = function(hdrCaption, color, btns) {
+  var main = document.querySelector("main");
+  var modal = document.createElement("section");
+  modal.classList.add("modal");
+  
+  var header = document.createElement("h2");
+  header.innerHTML = hdrCaption;
+  header.style.color = color;
+  
+  modal.appendChild(header);
+  
+  for(var i=0; i<btns.length; i++) {
+    modal.appendChild(btns[i]);
+  }
+  
+  main.appendChild(modal);
+  main.classList.add("is-modal");
+  
+  window.setTimeout(function() {
+    modal.classList.add("redy");
+  }, 10);
+}
+
+var removeModal = function() {
+  var main = document.querySelector("main");
+  var modal = document.querySelector("section.modal");
+  main.classList.remove("is-modal");
+
+  modal.classList.remove("redy");
+
+  window.setTimeout(function() {
+    main.removeChild(modal);
+  }, 500);
+}
+
+var gameOver = function(level) {
+  var btn1 = document.createElement("button");
+  var btn2 = document.createElement("button");
+
+  btn1.type = btn2.type = "button";
+
+  btn1.classList.add("menu-btn");
+  btn2.classList.add("menu-btn");
+
+  btn1.innerHTML = "Again";
+  btn2.innerHTML = "Return";
+
+  btn1.addEventListener("click", function() {
+    // Restart game    
+    removeModal();
+    map.htmlEl.classList.remove("redy");
+    createGame(level);
+  }, false);
+
+  btn2.addEventListener("click", function() {
+    // Return to main menu
+    removeModal();
+    map.htmlEl.classList.remove("redy");
+    window.setTimeout(function() {
+      renderMenu();
+      
+      window.setTimeout(function() {
+        document.querySelector("main").classList.remove("in-game");
+      }, 10);
+    }, 500);
+  }, false);
+  
+  createModal("Game over", "#a30606", [btn1, btn2]);
+}
+
+var wonGame = function() {
+  
+}
 
 function Level(col, row, mines) {
   this.col = col;
@@ -50,7 +125,6 @@ function Field(x, y) {
     
     this.htmlEl.style.left = (this.x * (w + margin*2)) + 'px';
     this.htmlEl.style.top = (this.y * (h + margin*2)) + 'px';
-    
     
     this.w = w;
     this.h = h;
@@ -104,7 +178,7 @@ function Map(level) {
       this.fields[x][y].open();
 
       if(this.fields[x][y].isMine) { // Game over
-
+        gameOver(this.level);
       }else if(this.fields[x][y].neighbors == 0) {
         function Point(x, y) {
           this.x = x;

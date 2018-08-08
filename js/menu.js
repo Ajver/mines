@@ -13,6 +13,7 @@ var createButton = function(level) {
 
 var renderMenu = function() {
   var container = document.getElementById("container");
+  container.innerHTML = "";
   var btnContainer = document.createElement("section");
   btnContainer.classList.add("menu-btns-container");
   

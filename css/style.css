@@ -24,6 +24,18 @@ main {
   width: 100vw;
   max-width: 1500px;
 }
+main::after {
+  content: "";
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0);
+  
+  transition: .7s;
+}
 
 h1 {
   font-size: 100rem;
@@ -46,6 +58,36 @@ h1 {
 
 main.in-game .header {
   top: 50px;
+}
+
+main.is-modal::after {
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal {
+  position: fixed;
+  z-index: 100;
+  width: 600px;
+  height: 400px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background-color: #808080;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  
+  transition: .5s;
+}
+.modal.redy {
+  transform: translate(-50%, -50%) scale(1);
+}
+.modal h2 {
+  font-size: 60px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 70px;
 }
 
 #container {
@@ -186,7 +228,7 @@ main.in-game .menu-btns-container {
   bottom: 40px;
   left: 0;
   right: 0;
-  transform: scale(0.05);
+  transform: scale(0);
   
   transition: .5s;
 }
