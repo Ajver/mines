@@ -3,7 +3,21 @@ var createAlert = function(msg) {
   alert(msg);
 }
 
+var exitCreator = function() {
+  // Return to main menu
+  var creatorEl = document.querySelector(".creator");
+  var main = document.querySelector("main");
+  
+  creatorEl.classList.remove("redy");
+  window.setTimeout(function() {
+    main.classList.remove("in-game");
+    main.removeChild(creatorEl);
+  }, 720);
+}
+
 var creator = function() {
+  state.current = state.creator;
+  
   // Clearing screen
   var main = document.querySelector("main");
   main.classList.add("in-game");
@@ -11,14 +25,6 @@ var creator = function() {
   // Creating custom level creator 
   var creatorEl = document.createElement("section");
   creatorEl.classList.add("creator");
-  
-  var returnF = function() {
-    // Return to main menu
-    creatorEl.classList.remove("redy");
-    window.setTimeout(function() {
-      main.classList.remove("in-game");
-    }, 720);
-  }
   
   var checkSizeF = function() {
     var size = sizeInput.value;
@@ -59,14 +65,6 @@ var creator = function() {
     }
   } 
   
-  window.addEventListener("keydown", function(e) {
-    if(e.keyCode === 13) { // Enter
-      startGameF();
-    }else if(e.keyCode === 27) { // ESC
-      returnF();
-    }
-  }, false);
-  
   // Inputs
   var sizeInput = document.createElement("input");
   sizeInput.type = "number";
@@ -84,7 +82,7 @@ var creator = function() {
   
   var btn1 = createButton("Start", startGameF);
   
-  var btn2 = createButton("Wróć", returnF);
+  var btn2 = createButton("Wróć", exitCreator);
   
   creatorEl.appendChild(caption1);
   creatorEl.appendChild(sizeInput);

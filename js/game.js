@@ -2,6 +2,16 @@ var isGame = false;
 var levels = [];
 var map = {};
 
+function State() {
+  this.menu = 0;
+  this.creator = 1;
+  this.game = 2;
+  
+  this.current = this.menu;
+} 
+
+let state = new State();
+
 var returnF = function() {
   // Return to main menu
   removeModal();
@@ -49,14 +59,14 @@ var createModal = function(hdrCaption, color, level) {
 
 var removeModal = function() {
   var main = document.querySelector("main");
-  var modal = document.querySelector("section.modal");
+  var modal = document.querySelector(".modal");
   
   if(modal) {
     modal.classList.remove("redy");
     
     window.setTimeout(function() {
       main.removeChild(modal);
-    }, 500);
+    }, 700);
   }
   
   main.classList.remove("is-modal");
@@ -109,23 +119,28 @@ function Field(x, y) {
     }
   }
   
+  this.setSize = function(w) {
+    this.w = w;
+    this.htmlEl.style.width = w + 'px';
+    this.htmlEl.style.height = w + 'px';
+    this.htmlEl.style.fontSize = (w * 0.9) + 'px';
+  }
+  
   this.createHTMLElement = function(w, margin) {
     this.htmlEl = document.createElement("div");
     this.htmlEl.classList.add("field");
     this.htmlEl.style.width = w + 'px';
     this.htmlEl.style.height = w + 'px';
+    this.htmlEl.style.margin = margin + 'px';
     this.htmlEl.style.fontSize = (w * 0.9) + 'px';
-    
-    if(w < 32) {
-      if(w < 16) {
-        this.htmlEl.style.borderRadius = '0';
-      }else {
-        this.htmlEl.style.borderRadius = '2px';
-      }
-    }
-    
-    this.htmlEl.style.left = (this.x * (w + margin*2)) + 'px';
-    this.htmlEl.style.top = (this.y * (w + margin*2)) + 'px';
+//    
+//    if(w < 32) {
+//      if(w < 16) {
+//        this.htmlEl.style.borderRadius = '0';
+//      }else {
+//        this.htmlEl.style.borderRadius = '2px';
+//      }
+//    }
     
     this.w = w;
     
@@ -172,6 +187,19 @@ function Map(level) {
   this.level = level;
   this.fields = [];
   this.htmlEl = null;
+  
+  this.onResize = function() {
+    this.w = window.innerHeight - 150;
+    
+    var size = this.level.col;
+    var margin = size < 24 ? 2 : size < 32 ? 1 : size < 48 ? 0.5 : 0;
+    var fieldW = (this.w/size) - (margin*2);
+    
+    for(var xx=0; xx<this.level.col; xx++) {
+    for(var yy=0; yy<this.level.row; yy++) {
+      this.fields[xx][yy].setSize(fieldW);
+    }}
+  }
   
   this.open = function (x, y) {
     if(!this.fields[x][y].isOpen && !this.fields[x][y].isPointed) {
@@ -250,7 +278,6 @@ function Map(level) {
   
   this.createMap = function() {
     var size = this.level.col;
-    
     var margin = size < 24 ? 2 : size < 32 ? 1 : size < 48 ? 0.5 : 0;
     var fieldW = (this.w/size) - (margin*2);
     
@@ -285,7 +312,7 @@ function Map(level) {
     this.htmlEl = document.createElement("div");
     this.htmlEl.classList.add("map");
     
-    this.w = window.innerHeight - 210;
+    this.w = window.innerHeight - 150;
     
     this.htmlEl.addEventListener("contextmenu", function(e) {
       e.preventDefault();
@@ -306,9 +333,10 @@ function Map(level) {
 }
 
 var createGame = function(level) {
-  var container = document.getElementById("container");
+  state.current = state.game;
   
   // Clearing screen
+  var container = document.getElementById("container");
   document.querySelector("main").classList.add("in-game");
   window.setTimeout(function() {
     container.innerHTML = "";
@@ -317,10 +345,4 @@ var createGame = function(level) {
       map.htmlEl.classList.add("redy");
     }, 10);
   }, 700);
-  
-  window.addEventListener("keydown", function(e) {
-    if(e.keyCode === 27) { // ESC
-      returnF();
-    }
-  }, false);
 }

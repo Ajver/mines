@@ -26,6 +26,8 @@ var createButton = function(caption, onclick) {
 }
 
 var renderMenu = function() {
+  state.current = state.menu;
+  
   var container = document.getElementById("container");
   container.innerHTML = "";
   var btnContainer = document.createElement("section");

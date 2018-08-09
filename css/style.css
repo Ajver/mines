@@ -58,7 +58,7 @@ h1 {
 }
 
 main.in-game .header {
-  top: 30px;
+  top: 10px;
 }
 
 main.is-modal::after {
@@ -231,22 +231,20 @@ main.in-game .menu-btns-container {
 }
 
 .map {
-  width: calc(100vh - 200px);
-  height: calc(100vh - 200px);
+  width: calc(100vh - 150px);
+  height: calc(100vh - 150px);
   margin: auto;
   position: absolute;
   bottom: 40px;
   left: 0;
   right: 0;
   transform: scale(0);
-/*
   display: flex;
   justify-content: space-between;
   align-items: center;
   align-content: space-between;
   flex-direction: row;
   flex-wrap: wrap;
-*/
   
   transition: .5s;
 }
@@ -256,16 +254,15 @@ main.in-game .menu-btns-container {
 
 .field {
   background-color: #524a4a;
-  border-radius: 3px;
+  border-radius: 5%;
   box-shadow: 0 0 6px #222;
   box-sizing: border-box;
   display: block;
-  position: absolute;
+/*  position: absolute;*/
   color: #e6e6e6;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 90%;
   
   transition: .1s;
 }
