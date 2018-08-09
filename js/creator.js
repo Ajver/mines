@@ -23,7 +23,7 @@ var creator = function() {
   var checkSizeF = function() {
     var size = sizeInput.value;
     if(size > 64) { // Too big
-      createAlert("Maximum size is 64!");
+      createAlert("Maksymalny rozmiar planszy to 64!");
       sizeInput.value = 64;
       
       return false;
@@ -36,7 +36,7 @@ var creator = function() {
     var size = minesInput.value;
     var maxSize = sizeInput.value * sizeInput.value;
     if(size > maxSize) { // Too big
-      createAlert("Maximum size is " + maxSize + "!");
+      createAlert("Maksymalna ilość min to " + maxSize + "!");
       minesInput.value = maxSize;
       
       return false;
@@ -54,7 +54,7 @@ var creator = function() {
           main.removeChild(creatorEl);
         }, 500);
       }else {
-        createAlert("Size have to by gretest than 0");
+        createAlert("Rozmiar planszy musi być większy niż 0");
       }
     }
   } 
@@ -77,14 +77,14 @@ var creator = function() {
   minesInput.addEventListener("focusout", checkMinesF, false);
   
   var caption1 = document.createElement("p");
-  caption1.innerHTML = "Size of map:";
+  caption1.innerHTML = "Rozmiar planszy:";
   
   var caption2 = document.createElement("p");
-  caption2.innerHTML = "Number of mines:";
+  caption2.innerHTML = "Ilość min:";
   
   var btn1 = createButton("Start", startGameF);
   
-  var btn2 = createButton("Return", returnF);
+  var btn2 = createButton("Wróć", returnF);
   
   creatorEl.appendChild(caption1);
   creatorEl.appendChild(sizeInput);

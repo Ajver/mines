@@ -15,14 +15,14 @@ var returnF = function() {
 }
 
 var createModal = function(hdrCaption, color, level) {
-  var btn1 = createButton("Again", function() {
+  var btn1 = createButton("Jeszcze raz", function() {
     // Restart game    
     removeModal();
     map.htmlEl.classList.remove("redy");
     createGame(level);
   });
   
-  var btn2 = createButton("Return", function() {
+  var btn2 = createButton("Wróć", function() {
     returnF();
   });
   
@@ -63,11 +63,11 @@ var removeModal = function() {
 }
 
 var gameOver = function(level) {
-  createModal("You lose", "#a30606", level);
+  createModal("Przegrałeś", "#a30606", level);
 }
 
 var wonGame = function(level) {
-  createModal("You won", "#07822a", level);
+  createModal("Wygrałeś", "#07822a", level);
 }
 
 function Level(col, row, mines) {
@@ -91,7 +91,7 @@ function Field(x, y) {
     
     if(this.isOpen) {
       if(this.isMine) {
-        this.htmlEl.innerHTML = '<img src="img/game/mine.png" width="' + this.w  + '" alt="">';
+        this.htmlEl.innerHTML = '<img src="img/game/mine.png" alt="o">';
       }else {
         if(this.neighbors > 0) {
           this.htmlEl.innerHTML = this.neighbors;
@@ -105,7 +105,7 @@ function Field(x, y) {
         }
       }
     }else if(this.isPointed) {
-      this.htmlEl.innerHTML = '<img src="img/game/flag.png" width="' + this.w + '" alt="">';
+      this.htmlEl.innerHTML = '<img src="img/game/flag.png" alt="P">';
     }
   }
   
@@ -168,7 +168,7 @@ function Field(x, y) {
 
 function Map(level) {
   var container = document.getElementById("container");
-  this.w = 700;
+  this.w = 0;
   this.level = level;
   this.fields = [];
   this.htmlEl = null;
@@ -284,6 +284,8 @@ function Map(level) {
   this.createHTMLElement = function() {
     this.htmlEl = document.createElement("div");
     this.htmlEl.classList.add("map");
+    
+    this.w = window.innerHeight - 210;
     
     this.htmlEl.addEventListener("contextmenu", function(e) {
       e.preventDefault();

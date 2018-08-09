@@ -38,7 +38,7 @@ var renderMenu = function() {
   var btn = document.createElement("button");
   btn.type = "button";
   btn.classList.add("map-size-btn");
-  btn.innerHTML = "Custom level";
+  btn.innerHTML = "Własny poziom";
   btn.style.textAlign = "center";
   btn.addEventListener("click", function() {
     creator();    
