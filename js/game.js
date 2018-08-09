@@ -12,7 +12,7 @@ var returnF = function() {
     window.setTimeout(function() {
       document.querySelector("main").classList.remove("in-game");
     }, 20);
-  }, 500);
+  }, 700);
 }
 
 var createModal = function(hdrCaption, color, level) {
@@ -319,7 +319,6 @@ var createGame = function(level) {
   
   window.addEventListener("keydown", function(e) {
     if(e.keyCode === 27) { // ESC
-      removeModal();
       returnF();
     }
   }, false);
