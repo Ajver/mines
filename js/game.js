@@ -3,25 +3,14 @@ var levels = [];
 var map = {};
 
 var createModal = function(hdrCaption, color, level) {
-  var btn1 = document.createElement("button");
-  var btn2 = document.createElement("button");
-
-  btn1.type = btn2.type = "button";
-
-  btn1.classList.add("menu-btn");
-  btn2.classList.add("menu-btn");
-
-  btn1.innerHTML = "Again";
-  btn2.innerHTML = "Return";
-
-  btn1.addEventListener("click", function() {
+  var btn1 = createButton("Again", function() {
     // Restart game    
     removeModal();
     map.htmlEl.classList.remove("redy");
     createGame(level);
-  }, false);
-
-  btn2.addEventListener("click", function() {
+  });
+  
+  var btn2 = createButton("Return", function() {
     // Return to main menu
     removeModal();
     map.htmlEl.classList.remove("redy");
@@ -32,7 +21,7 @@ var createModal = function(hdrCaption, color, level) {
         document.querySelector("main").classList.remove("in-game");
       }, 20);
     }, 500);
-  }, false);
+  });
   
   var main = document.querySelector("main");
   var modal = document.createElement("section");
@@ -85,7 +74,6 @@ function Field(x, y) {
   this.x = x;
   this.y = y;
   this.w = 0;
-  this.h = 0;
   this.neighbors = 0;
   this.isOpen = false;
   this.isMine = false;
@@ -97,36 +85,43 @@ function Field(x, y) {
     
     if(this.isOpen) {
       if(this.isMine) {
-        this.htmlEl.innerHTML = '<img src="img/game/mine.png" width="' + (this.w < this.h ? this.w : this.h) + '" alt="">';
+        this.htmlEl.innerHTML = '<img src="img/game/mine.png" width="' + this.w  + '" alt="">';
       }else {
         if(this.neighbors > 0) {
           this.htmlEl.innerHTML = this.neighbors;
           switch(this.neighbors) {
-            case 1: this.htmlEl.style.color = '#025419'; break;
-            case 2: this.htmlEl.style.color = '#004c7a'; break;
-            case 3: this.htmlEl.style.color = '#e29700'; break;
-            case 4: this.htmlEl.style.color = '#a30606'; break;
-            default: this.htmlEl.style.color = '#560707'; break;
+            case 1: this.htmlEl.style.backgroundColor = '#025419'; break;
+            case 2: this.htmlEl.style.backgroundColor = '#004c7a'; break;
+            case 3: this.htmlEl.style.backgroundColor = '#c47104'; break;
+            case 4: this.htmlEl.style.backgroundColor = '#a30606'; break;
+            default: this.htmlEl.style.backgroundColor = '#560707'; break;
           }
         }
       }
     }else if(this.isPointed) {
-      this.htmlEl.innerHTML = '<img src="img/game/flag.png" width="' + (this.w < this.h ? this.w : this.h) + '" alt="">';
+      this.htmlEl.innerHTML = '<img src="img/game/flag.png" width="' + this.w + '" alt="">';
     }
   }
   
-  this.createHTMLElement = function(w, h, margin) {
+  this.createHTMLElement = function(w, margin) {
     this.htmlEl = document.createElement("div");
     this.htmlEl.classList.add("field");
     this.htmlEl.style.width = w + 'px';
-    this.htmlEl.style.height = h + 'px';
+    this.htmlEl.style.height = w + 'px';
     this.htmlEl.style.fontSize = (w * 0.9) + 'px';
     
+    if(w < 32) {
+      if(w < 16) {
+        this.htmlEl.style.borderRadius = '0';
+      }else {
+        this.htmlEl.style.borderRadius = '2px';
+      }
+    }
+    
     this.htmlEl.style.left = (this.x * (w + margin*2)) + 'px';
-    this.htmlEl.style.top = (this.y * (h + margin*2)) + 'px';
+    this.htmlEl.style.top = (this.y * (w + margin*2)) + 'px';
     
     this.w = w;
-    this.h = h;
     
     this.htmlEl.addEventListener("click", function() {
       map.open(x, y);
@@ -236,7 +231,6 @@ function Map(level) {
   this.point = function(x, y) {
     if(!this.fields[x][y].isPointed) {
       this.fields[x][y].isPointed = true;
-      
     }else {
       this.fields[x][y].isPointed = false;
     }
@@ -245,15 +239,16 @@ function Map(level) {
   }
   
   this.createMap = function() {
-    var margin = this.level.col < 32 ? 2 : 1;
-    var fieldW = (this.w/this.level.col) - (margin*2);
-    var fieldH = (this.w/this.level.row) - (margin*2);
+    var size = this.level.col;
+    
+    var margin = size < 24 ? 2 : size < 32 ? 1 : size < 48 ? 0.5 : 0;
+    var fieldW = (this.w/size) - (margin*2);
     
     for(var xx=0; xx<this.level.col; xx++) {
       this.fields[xx] = [];
       for(var yy=0; yy<this.level.row; yy++) {
-        this.fields[xx][yy] = new Field(xx, yy, fieldW);       
-        this.fields[xx][yy].createHTMLElement(fieldW, fieldH, margin);
+        this.fields[xx][yy] = new Field(xx, yy);       
+        this.fields[xx][yy].createHTMLElement(fieldW, margin);
       }
     }
     

@@ -169,12 +169,18 @@ main.in-game .menu-btns-container {
   width: 300px;
   height: 60px;
   text-shadow: 0 0 40px #0a3538;
+  
+  transition: .5s;
+}
+.menu-btn:hover {
+  color: #4f9cae;
 }
 .menu-btn::before {
   background: url(../img/menu/button.png);
   background-position: bottom;
 }
-.menu-btn:hover::before {
+.menu-btn:hover::before,
+.menu-btn:active::before {
   transform: scale(1.07);
 }
 
@@ -188,7 +194,8 @@ main.in-game .menu-btns-container {
   
   transition: .5s;
 }
-.map-size-btn:hover {
+.map-size-btn:hover,
+.map-size-btn:active {
   color: #4f9cae;
 }
 .map-size-btn::before {
@@ -196,7 +203,8 @@ main.in-game .menu-btns-container {
   border-radius: 10px;
   transform: translateY(-15%);
 }
-.map-size-btn:hover::before {
+.map-size-btn:hover::before,
+.map-size-btn:active::before {
   background-color: #302828;
 }
 
@@ -243,7 +251,10 @@ main.in-game .menu-btns-container {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  color: #000;
+  color: #e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   transition: .1s;
 }
@@ -258,6 +269,52 @@ main.in-game .menu-btns-container {
 .field.open:hover {
   background-color: #746c6c;
   box-shadow: none;
+}
+
+.creator {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  margin: auto;
+  background-color: #827e7e;
+  transform: scale(0);
+  padding-top: 40px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  
+  transition: .5s;
+}
+.creator.redy {
+  transform: scale(1);
+}
+
+.creator p {
+  color: #efefef;
+  font-size: 20rem;
+  text-align: center;
+  margin-top: 20rem;
+}
+
+.creator input[type=number] {
+  width: 30%;
+  height: 40rem;
+  font-size: 25rem;
+  padding: 5rem;
+  outline: none;
+  display: block;
+  margin: 10px auto;
+  border-radius: 3px;
+  border: none;
+  background-color: #efefef;
+  color: #4f9cae;
+  
+  transition: .3s;
+}
+.creator .menu-btn:first-of-type {
+  margin-top: 100px;
 }
 
 .game-footer {
