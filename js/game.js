@@ -8,7 +8,6 @@ var returnF = function() {
   map.htmlEl.classList.remove("redy");
   window.setTimeout(function() {
     renderMenu();
-
     window.setTimeout(function() {
       document.querySelector("main").classList.remove("in-game");
     }, 20);

@@ -17,7 +17,7 @@ var creator = function() {
     creatorEl.classList.remove("redy");
     window.setTimeout(function() {
       main.classList.remove("in-game");
-    }, 500);
+    }, 720);
   }
   
   var checkSizeF = function() {
