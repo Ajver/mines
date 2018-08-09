@@ -8,7 +8,10 @@ var exitCreator = function() {
   var creatorEl = document.querySelector(".creator");
   var main = document.querySelector("main");
   
-  creatorEl.classList.remove("redy");
+  if(creatorEl) {
+    creatorEl.classList.remove("redy");
+  }
+  
   window.setTimeout(function() {
     main.classList.remove("in-game");
     main.removeChild(creatorEl);
