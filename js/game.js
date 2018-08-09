@@ -1,6 +1,19 @@
-
+var isGame = false;
 var levels = [];
 var map = {};
+
+var returnF = function() {
+  // Return to main menu
+  removeModal();
+  map.htmlEl.classList.remove("redy");
+  window.setTimeout(function() {
+    renderMenu();
+
+    window.setTimeout(function() {
+      document.querySelector("main").classList.remove("in-game");
+    }, 20);
+  }, 500);
+}
 
 var createModal = function(hdrCaption, color, level) {
   var btn1 = createButton("Again", function() {
@@ -11,16 +24,7 @@ var createModal = function(hdrCaption, color, level) {
   });
   
   var btn2 = createButton("Return", function() {
-    // Return to main menu
-    removeModal();
-    map.htmlEl.classList.remove("redy");
-    window.setTimeout(function() {
-      renderMenu();
-      
-      window.setTimeout(function() {
-        document.querySelector("main").classList.remove("in-game");
-      }, 20);
-    }, 500);
+    returnF();
   });
   
   var main = document.querySelector("main");
@@ -47,13 +51,16 @@ var createModal = function(hdrCaption, color, level) {
 var removeModal = function() {
   var main = document.querySelector("main");
   var modal = document.querySelector("section.modal");
+  
+  if(modal) {
+    modal.classList.remove("redy");
+    
+    window.setTimeout(function() {
+      main.removeChild(modal);
+    }, 500);
+  }
+  
   main.classList.remove("is-modal");
-
-  modal.classList.remove("redy");
-
-  window.setTimeout(function() {
-    main.removeChild(modal);
-  }, 500);
 }
 
 var gameOver = function(level) {
@@ -173,6 +180,8 @@ function Map(level) {
 
       if(this.fields[x][y].isMine) { // Game over
         gameOver(this.level);
+        isGame = false;
+        return;
       }else if(this.fields[x][y].neighbors == 0) {
         function Point(x, y) {
           this.x = x;
@@ -225,6 +234,8 @@ function Map(level) {
     
     if(won) {
       wonGame(this.level);
+      isGame = false;
+      return;
     }
   }
   
@@ -305,4 +316,11 @@ var createGame = function(level) {
       map.htmlEl.classList.add("redy");
     }, 10);
   }, 700);
+  
+  window.addEventListener("keydown", function(e) {
+    if(e.keyCode === 27) { // ESC
+      removeModal();
+      returnF();
+    }
+  }, false);
 }
