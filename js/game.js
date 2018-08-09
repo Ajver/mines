@@ -63,7 +63,7 @@ var removeModal = function() {
 }
 
 var gameOver = function(level) {
-  createModal("Game over", "#a30606", level);
+  createModal("You lose", "#a30606", level);
 }
 
 var wonGame = function(level) {

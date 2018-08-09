@@ -38,7 +38,7 @@ main::after {
 }
 
 h1 {
-  font-size: 100rem;
+  font-size: 100px;
   margin: 40px 0;
   text-transform: uppercase;
   letter-spacing: 6px;
@@ -145,7 +145,7 @@ main.is-modal::after {
   cursor: url(../img/menu/cursor.png), default;
   position: relative;
   color: #fff;
-  font-size: 40rem;
+  font-size: 40px;
 }
 
 main.in-game .menu-btns-container {
@@ -186,7 +186,7 @@ main.in-game .menu-btns-container {
 }
 
 .map-size-btn {
-  width: 400px;
+  width: 500px;
   height: 80px;
   margin-top: 20px;
   text-align: right;
@@ -294,16 +294,16 @@ main.in-game .menu-btns-container {
 
 .creator p {
   color: #efefef;
-  font-size: 20rem;
+  font-size: 20px;
   text-align: center;
-  margin-top: 20rem;
+  margin-top: 20px;
 }
 
 .creator input[type=number] {
   width: 30%;
-  height: 40rem;
-  font-size: 25rem;
-  padding: 5rem;
+  height: 40px;
+  font-size: 25px;
+  padding: 5px;
   outline: none;
   display: block;
   margin: 10px auto;
@@ -333,13 +333,13 @@ main.in-game .menu-btns-container {
 }
 
 .game-footer p {
-  font-size: 16rem;
+  font-size: 16px;
   color: #efefef;
 }
 
 .game-footer p a {
   text-decoration: none;
   color: #4f9cae;
-  letter-spacing: 2rem;
-  margin-left: 10rem;
+  letter-spacing: 2px;
+  margin-left: 10px;
 }
