@@ -28,7 +28,7 @@ var setup = function() {
   
   
   window.addEventListener("resize", function() {
-    if(map) {
+    if(state.current === state.game) {
       map.onResize();
     }
   }, false);
