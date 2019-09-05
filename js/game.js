@@ -133,14 +133,6 @@ function Field(x, y) {
     this.htmlEl.style.height = w + 'px';
     this.htmlEl.style.margin = margin + 'px';
     this.htmlEl.style.fontSize = (w * 0.9) + 'px';
-//    
-//    if(w < 32) {
-//      if(w < 16) {
-//        this.htmlEl.style.borderRadius = '0';
-//      }else {
-//        this.htmlEl.style.borderRadius = '2px';
-//      }
-//    }
     
     this.w = w;
     
@@ -311,7 +303,22 @@ function Map(level) {
   this.createHTMLElement = function() {
     this.htmlEl = document.createElement("div");
     this.htmlEl.classList.add("map");
-    
+
+    let style = document.createElement('style');
+    let mapCssClass = `
+      .map {
+        grid-template-columns:`;    
+
+    for(let i=0; i<this.level.col; i++) {
+      mapCssClass += ' auto';
+    }
+
+    mapCssClass += ';}';
+
+    style.innerHTML = mapCssClass;
+
+    this.htmlEl.appendChild(style);
+
     this.w = window.innerHeight - 150;
     
     this.htmlEl.addEventListener("contextmenu", function(e) {
